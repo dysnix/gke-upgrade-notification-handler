@@ -6,10 +6,24 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
+)
+
+var (
+	projectID = os.Getenv("GCP_PROJECT_ID")
+	subID     = os.Getenv("GCP_SUBSCRIPTION_ID")
 )
 
 func main() {
-	err := pullMsg("zksync", "gke-upgrade")
+	if projectID == "" {
+		log.Fatal("GCP_PROJECT_ID must be set")
+		return
+	}
+	if subID == "" {
+		log.Fatal("GCP_SUBSCRIPTION_ID must be set")
+		return
+	}
+	err := pullMsg(projectID, subID)
 	if err != nil {
 		log.Printf("Receive: %v \n", err)
 	}
@@ -57,4 +71,12 @@ func DecodeJson(data []byte, result Event) {
 	if err != nil {
 		log.Printf("DecodeJson: %v", err)
 	}
+}
+
+func Send(message string) {
+	mmWebHookUrl := os.Getenv("MATTERMOST_WEBHOOK_URL")
+	if mmWebHookUrl != "" {
+		MmSend(mmWebHookUrl, message)
+	}
+	log.Println(message)
 }

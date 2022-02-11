@@ -6,9 +6,8 @@ import (
 	"net/http"
 )
 
-func Send(message string) {
+func MmSend(url, message string) {
 	var body = []byte(`{"text":"` + message + `"}`)
-	url := "https://most.matter-labs.io/hooks/h467xoyk8py87fnza4ngozaqch"
 	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(body))
 	if err != nil {
 		log.Println(err)
