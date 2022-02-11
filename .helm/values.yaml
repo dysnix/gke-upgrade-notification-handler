@@ -44,7 +44,7 @@ securityContext: {}
   # runAsNonRoot: true
 # runAsUser: 1000
 
-#resources:
+resources: {}
 #  limits:
 #    cpu: 7000m
 #    memory: 5Gi
@@ -52,12 +52,14 @@ securityContext: {}
 #    cpu: 7000m
 #    memory: 5Gi
 
-# nodeSelector:
+nodeSelector: {}
 #   node_pool: default-pool
 
 tolerations: []
 
 affinity: {}
+
+terminationGracePeriodSeconds: 30
 
 ## updateStrategy
 ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
